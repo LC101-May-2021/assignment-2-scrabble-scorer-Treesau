@@ -59,7 +59,7 @@ let scrabbleScore = function(word) {
 	word = word.toUpperCase();
 	let points = 0;
   for (letter of word) {
-    points += Number(newPointStructure[letter]);
+    points += newPointStructure[letter];
   }
 	return points;
  };
@@ -98,7 +98,7 @@ function transform(pointStructure1) {
   let pointStructure2 = {};
   for (score in pointStructure1) {
     for (letter of pointStructure1[score]) {
-      pointStructure2[letter] = score;
+      pointStructure2[letter.toLowerCase()] = Number(score);
     }
   }
   return pointStructure2;
