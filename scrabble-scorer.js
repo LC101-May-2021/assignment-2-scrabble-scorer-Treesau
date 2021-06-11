@@ -56,7 +56,7 @@ let vowelBonusScore = function(word){
   };
 
 let scrabbleScore = function(word) {
-	word = word.toUpperCase();
+	word = word.toLowerCase();
 	let points = 0;
   for (letter of word) {
     points += newPointStructure[letter];
@@ -66,7 +66,7 @@ let scrabbleScore = function(word) {
 
 let scoreOption0 = {
   name: 'Simple Score',
-  description: 'Each letter is worth 1 point',
+  description: 'Each letter is worth 1 point.',
   scorerFunction: simpleScore
 };
 
@@ -74,7 +74,7 @@ let scoreOption1 = {
   name: 'Bonus Vowels',
   description: 'Vowels are 3 pts, consonants are 1 pt.',
   scorerFunction: vowelBonusScore
-  };
+};
 
 let scoreOption2 = {
   name: 'Scrabble',
