@@ -35,26 +35,66 @@ function oldScrabbleScorer(word) {
 function initialPrompt() {
    console.log("Let's play some scrabble!\n");
    let word = input.question("Enter a word to score: ");
-   console.log(oldScrabbleScorer(word));
+   //console.log(oldScrabbleScorer(word));
+   return word;
 };
 
-let simpleScore;
+let simpleScore = function(word){return word.length};
 
-let vowelBonusScore;
+let vowelBonusScore = function(word){
+    let points = 0;
+    word = word.toUpperCase();
+    const vowels = ['A', 'E', 'I', 'O', 'U'];
+    for (letter of word) {
+      if (vowels.includes(letter)) {
+        points += 3;
+      } else {
+        points++;
+      }
+    }
+    return points;
+  };
 
-let scrabbleScore;
+let scrabbleScore = oldScrabbleScorer;
 
-const scoringAlgorithms = [];
+let scoreOption0 = {
+  name: 'Simple Score',
+  description: 'Each letter is worth 1 point',
+  scorerFunction: simpleScore
+};
 
-function scorerPrompt() {}
+let scoreOption1 = {
+  name: 'Bonus Vowels',
+  description: 'Vowels are 3 pts, consonants are 1 pt.',
+  scorerFunction: vowelBonusScore
+  };
+
+let scoreOption2 = {
+  name: 'Scrabble',
+  description: 'The traditional scoring algorithm.',
+  scorerFunction: oldScrabbleScorer
+};
+
+const scoringAlgorithms = [scoreOption0, scoreOption1, scoreOption2];
+
+function scorerPrompt() {
+  const validInputs = ['0', '1', '2'];
+  let scoringAlg = '';
+  console.log(`Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\n`);
+  while (!validInputs.includes(scoringAlg)) {
+    scoringAlg = input.question("Enter 0, 1, or 2: ");
+  }
+  return scoringAlgorithms[Number(scoringAlg)];
+}
 
 function transform() {};
 
 let newPointStructure;
 
 function runProgram() {
-   initialPrompt();
-   
+   const word = initialPrompt();
+   const selectedScorer = scorerPrompt();
+   console.log(`Score for '${word}': ${selectedScorer.scorerFunction(word)}`);
 }
 
 // Don't write any code below this line //
